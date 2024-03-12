@@ -24,9 +24,11 @@ const token = localStorage.getItem("token");
 const submitButton = document.querySelector('.modal-img-button');
 const fileInputDiv = document.querySelector('.img-upload');
 
+// Si l'utilisateur est connecté
 if (localStorage.getItem("token")) {
 
     // Edit Overlay
+    // Affichage des éléments appropriés
     var show = [editOverlay, editButton, logoutButton];
     showElement(show);
 
@@ -35,11 +37,13 @@ if (localStorage.getItem("token")) {
 
     header.style.marginTop = '109px';
 
+    // Gestion du bouton de déconnexion
     logoutButton.addEventListener('click', function () {
         logoutUser();
     });
 
     // Open/Close Modal
+    // Ouverture/Fermeture du modal
     editButton.addEventListener('click', function () {
         var show = [modalOverlay, modalGalleryTitle, modalGallery, hrModalGallery, nextPage];
         showElement(show);
@@ -78,17 +82,15 @@ if (localStorage.getItem("token")) {
     });
 
     // Upload Image
+    // Téléchargement d'une image
     fileInput.addEventListener('change', (e) => {
-
         const types = ['image/jpeg', 'image/png'];
 
         hideValidationError(fileInputDiv);
 
         if (!types.includes(e.target.files[0].type)) {
             const errorText = "Format non autorisé";
-
             fileInput.value = '';
-
             showValidationError(fileInputDiv, true, errorText);
             return;
         } else if (fileInput.value === '') {
@@ -99,6 +101,7 @@ if (localStorage.getItem("token")) {
         }
     });
 
+    // Validation en temps réel du champ de titre
     titleInput.addEventListener('input', function () {
         if (titleInput.value.trim() === '') {
             showValidationError(titleInput);
@@ -107,6 +110,7 @@ if (localStorage.getItem("token")) {
         }
     });
 
+    // Validation en temps réel du champ de catégorie
     categorySelect.addEventListener('change', function () {
         if (categorySelect.value === '') {
             showValidationError(categorySelect);
@@ -115,6 +119,7 @@ if (localStorage.getItem("token")) {
         }
     });
 
+    // Gestion de la soumission du formulaire
     submitButton.addEventListener('click', async (e) => {
         checkFormValidity([fileInput, titleInput, categorySelect]);
 
@@ -207,4 +212,19 @@ if (localStorage.getItem("token")) {
             }
         }
     });
+}
+if (localStorage.getItem("token")) {
+    // Utilisateur connecté
+    // ...
+
+    // Cacher la classe "filter-links"
+    const filterLinksContainer = document.querySelector('.filter-links');
+    hideElement([filterLinksContainer]);
+} else {
+    // Utilisateur non connecté
+    // ...
+
+    // Laisser la classe "filter-links" visible
+    const filterLinksContainer = document.querySelector('.filter-links');
+    showElement([filterLinksContainer]);
 }
